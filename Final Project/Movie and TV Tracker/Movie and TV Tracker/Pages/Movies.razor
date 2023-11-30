@@ -1,0 +1,247 @@
+﻿@page "/movies"
+@inject HttpClient HttpClient
+@using Movie_and_TV_Tracker.Data.Models
+@inject NavigationManager NavigationManager
+
+<h3 style="color: darkorange;">Movie Tracker List</h3>
+
+<div class="input-container">
+    <label style="color: darkorange;">Title:</label>
+    <input @bind="movie.title" />
+</div>
+<div class="input-container">
+    <label style="color: darkorange;">Release Date:</label>
+    <input @bind="movie.release_date" />
+</div>
+<div class="input-container">
+    <label style="color: darkorange;">Runtime (min):</label>
+    <input @bind="movie.runtime_in_min" type="number" />
+</div>
+<div class="input-container">
+    <label style="color: darkorange;">Watch Status:</label>
+    <select @bind="movie.watch_status">
+        <option value="Want to Watch" style="color: darkorange;"></option>
+        <option value="Want to Watch" style="color: darkorange;">Want to Watch</option>
+        <option value="Watching" style="color: darkorange;">Watched</option>
+    </select>
+</div>
+<br />
+<br />
+<br />
+<button class="action-button" style="background-color: darkorange; color: black;" @onclick="AddMovie">Add Movie</button>
+
+@if (showEditForm)
+{
+    <div class="edit-form">
+        <h4 style="color: darkorange;">Edit Movie</h4>
+        <div class="input-container">
+            <label style="color: darkorange;">Title:</label>
+            <input @bind="selectedMovie.title" />
+        </div>
+        <div class="input-container">
+            <label style="color: darkorange;">Release Date:</label>
+            <input @bind="selectedMovie.release_date" />
+        </div>
+        <div class="input-container">
+            <label style="color: darkorange;">Runtime (min):</label>
+            <input @bind="selectedMovie.runtime_in_min" type="number" />
+        </div>
+        <div class="input-container">
+            <label style="color: darkorange;">Watch Status:</label>
+            <select @bind="selectedMovie.watch_status">
+                <option value="Want to Watch" style="color: darkorange;"></option>
+                <option value="Want to Watch" style="color: darkorange;">Want to Watch</option>
+                <option value="Watched" style="color: darkorange;">Watched</option>
+            </select>
+        </div>
+        <br />
+        <button class="action-button" style="background-color: darkorange; color: black;" @onclick="UpdateMovie">Update Movie</button>
+        <button class="action-button" style="background-color: darkorange; color: black;" @onclick="CancelEdit">Cancel</button>
+    </div>
+}
+
+@if (movies == null)
+{
+    <p style="color: darkorange;"><em>Empty... Suspicious... Server is likely not running. Double-check to make sure it is</em></p>
+}
+else
+{
+    <table class="movie-table">
+        <thead>
+            <tr>
+                <th style="color: darkorange; width: 15%;">Options</th>
+                <th style="color: darkorange">ID</th>
+                <th style="color: darkorange">Title</th>
+                <th style="color: darkorange">Release Date</th>
+                <th style="color: darkorange">Runtime (min)</th>
+                <th style="color: darkorange">Watch Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var movie in movies)
+            {
+                <tr>
+                    <td>
+                        <button class="action-button" style="background-color: darkorange; color: black;" @onclick="() => ShowEditForm(movie)">Edit</button>
+                        <button class="action-button" style="background-color: darkorange; color: black;" @onclick="() => DeleteMovie(movie.id)">Delete</button>
+                    </td>
+                    <td style="color: darkorange;">@movie.id</td>
+                    <td style="color: darkorange;">@movie.title</td>
+                    <td style="color: darkorange;">@movie.release_date</td>
+                    <td style="color: darkorange;">@movie.runtime_in_min</td>
+                    <td style="color: darkorange;">@movie.watch_status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<style>
+    .input-container {
+        margin-bottom: 10px;
+    }
+
+        .input-container input,
+        .input-container select {
+            background-color: #333; 
+            color: white; 
+            border: 1px solid darkorange; 
+            padding: 6px;
+            border-radius: 4px;
+        }
+
+    .action-button {
+        border: none;
+        padding: 8px 12px;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+
+    .edit-form {
+        border: 2px solid darkorange;
+        padding: 10px;
+        margin-top: 20px;
+    }
+
+    .movie-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+        .movie-table th,
+        .movie-table td {
+            border: 1px solid darkorange;
+            padding: 8px;
+            text-align: left;
+        }
+</style>
+
+
+@code {
+    private List<Movie> movies;
+    private bool showEditForm = false;
+    private Movie selectedMovie;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        HttpClient.BaseAddress = new Uri("http://127.0.0.1:8000");
+        movies = await HttpClient.GetFromJsonAsync<List<Movie>>("/movies");
+    }
+    private MovieInputObject movie = new MovieInputObject();
+
+
+    private async Task AddMovie()
+    {
+        try
+        {
+            Console.WriteLine("Add Movie button clicked");
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://127.0.0.1:8000");
+
+                await client.PostAsJsonAsync("/movies/", new
+                {
+                    title = movie.title,
+                    release_date = movie.release_date,
+                    runtime_in_min = movie.runtime_in_min,
+                    watch_status = movie.watch_status
+                });
+
+                movies = await client.GetFromJsonAsync<List<Movie>>("/movies");
+            }
+
+            Console.WriteLine("Added movie successfully");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error adding movie: {ex.Message}");
+        }
+    }
+   
+    private void ShowEditForm(Movie movie) //Checks to see if the edit form should be open.
+    {
+        Console.WriteLine("ShowEditForm called");
+        selectedMovie = movie;
+        showEditForm = true;
+    }
+
+    // Method to close the edit form
+    private void CancelEdit() //Ends the edit form
+    {
+        showEditForm = false;
+        selectedMovie = null;
+    }
+    private async Task UpdateMovie() //Update Movie with edit information
+    {
+        try
+        {
+            Console.WriteLine("Update Movie button clicked");
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://127.0.0.1:8000");
+
+                await client.PutAsJsonAsync($"/movies/{selectedMovie.id}", new
+                {
+                    title = selectedMovie.title,
+                    release_date = selectedMovie.release_date,
+                    runtime_in_min = selectedMovie.runtime_in_min,
+                    watch_status = selectedMovie.watch_status
+                });
+
+                movies = await client.GetFromJsonAsync<List<Movie>>("/movies");
+            }
+
+            Console.WriteLine("Updated movie successfully");
+            showEditForm = false;
+            selectedMovie = null;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error updating movie: {ex.Message}");
+        }
+    }
+    private async Task DeleteMovie(int movieID)
+    {
+        try
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://127.0.0.1:8000");
+
+                await client.DeleteAsync($"/movies/{movieID}");
+
+                // Refresh the list of movies after deletion
+                movies = await client.GetFromJsonAsync<List<Movie>>("/movies");
+            }
+
+            Console.WriteLine($"Deleted movie with ID {movieID} successfully");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error deleting movie: {ex.Message}");
+        }
+    }
+}

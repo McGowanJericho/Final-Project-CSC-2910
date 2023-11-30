@@ -1,0 +1,31 @@
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\bin\Debug\net7.0\appsettings.Development.json
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\bin\Debug\net7.0\appsettings.json
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\bin\Debug\net7.0\Movie and TV Tracker.staticwebassets.runtime.json
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\bin\Debug\net7.0\Movie and TV Tracker.exe
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\bin\Debug\net7.0\Movie and TV Tracker.deps.json
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\bin\Debug\net7.0\Movie and TV Tracker.runtimeconfig.json
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\bin\Debug\net7.0\Movie and TV Tracker.dll
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\bin\Debug\net7.0\Movie and TV Tracker.pdb
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\obj\Debug\net7.0\Movie and TV Tracker.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\obj\Debug\net7.0\Movie and TV Tracker.AssemblyInfoInputs.cache
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\obj\Debug\net7.0\Movie and TV Tracker.AssemblyInfo.cs
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\obj\Debug\net7.0\Movie and TV Tracker.csproj.CoreCompileInputs.cache
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\obj\Debug\net7.0\Movie and TV Tracker.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\obj\Debug\net7.0\Movie and TV Tracker.RazorAssemblyInfo.cache
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\obj\Debug\net7.0\Movie and TV Tracker.RazorAssemblyInfo.cs
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\obj\Debug\net7.0\staticwebassets\msbuild.Movie and TV Tracker.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\obj\Debug\net7.0\staticwebassets\msbuild.build.Movie and TV Tracker.props
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.Movie and TV Tracker.props
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.Movie and TV Tracker.props
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\obj\Debug\net7.0\staticwebassets.pack.json
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\obj\Debug\net7.0\staticwebassets.build.json
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\obj\Debug\net7.0\staticwebassets.development.json
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\obj\Debug\net7.0\scopedcss\Shared\MainLayout.razor.rz.scp.css
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\obj\Debug\net7.0\scopedcss\Shared\NavMenu.razor.rz.scp.css
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\obj\Debug\net7.0\scopedcss\bundle\Movie and TV Tracker.styles.css
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\obj\Debug\net7.0\scopedcss\projectbundle\Movie and TV Tracker.bundle.scp.css
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\obj\Debug\net7.0\Movie and TV Tracker.dll
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\obj\Debug\net7.0\refint\Movie and TV Tracker.dll
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\obj\Debug\net7.0\Movie and TV Tracker.pdb
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\obj\Debug\net7.0\Movie and TV Tracker.genruntimeconfig.cache
+C:\Users\Jericho McGowan\Downloads\Final Project\Movie and TV Tracker\Movie and TV Tracker\obj\Debug\net7.0\ref\Movie and TV Tracker.dll

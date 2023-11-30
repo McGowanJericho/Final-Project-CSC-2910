@@ -1,0 +1,253 @@
+﻿@page "/shows"
+@inject HttpClient HttpClient
+@using Movie_and_TV_Tracker.Data.Models
+@inject NavigationManager NavigationManager
+
+<h3 style="color: darkorange;">TV Show Tracker List</h3>
+
+<div class="input-container">
+    <label style="color: darkorange;">Name:</label>
+    <input @bind="tvShow.name" />
+</div>
+<div class="input-container">
+    <label style="color: darkorange;">Release Date:</label>
+    <input @bind="tvShow.release_date" />
+</div>
+<div class="input-container">
+    <label style="color: darkorange;">Number of Episodes Watched:</label>
+    <input @bind="tvShow.number_of_episodes" type="number" />
+</div>
+<div class="input-container">
+    <label style="color: darkorange;">Watch Status:</label>
+    <select @bind="tvShow.watch_status">
+        <option value="Want to Watch" style="color: darkorange;"></option>
+        <option value="Want to Watch" style="color: darkorange;">Want to Watch</option>
+        <option value="Watching" style="color: darkorange;">Watching</option>
+        <option value="Watched" style="color: darkorange;">Watched</option>
+        <option value="Dropped" style="color: darkorange;">Dropped</option>
+    </select>
+</div>
+<br />
+<br />
+<br />
+<button class="action-button" style="background-color: darkorange; color: black;" @onclick="AddTVShow">Add TV Show</button>
+
+@if (showEditForm)
+{
+    <div class="edit-form">
+        <h4 style="color: darkorange;">Edit TV Show</h4>
+        <div class="input-container">
+            <label style="color: darkorange;">Name:</label>
+            <input @bind="selectedTVShow.name" />
+        </div>
+        <div class="input-container">
+            <label style="color: darkorange;">Release Date:</label>
+            <input @bind="selectedTVShow.release_date" />
+        </div>
+        <div class="input-container">
+            <label style="color: darkorange;">Number of Episodes:</label>
+            <input @bind="selectedTVShow.number_of_episodes" type="number" />
+        </div>
+        <div class="input-container">
+            <label style="color: darkorange;">Watch Status:</label>
+            <select @bind="selectedTVShow.watch_status">
+                <option value="Want to Watch" style="color: darkorange;">Want to Watch</option>
+                <option value="Watching" style="color: darkorange;">Watching</option>
+                <option value="Watched" style="color: darkorange;">Watched</option>
+                <option value="Dropped" style="color: darkorange;">Dropped</option>
+            </select>
+        </div>
+        <br />
+        <button class="action-button" style="background-color: darkorange; color: black;" @onclick="UpdateTVShow">Update TV Show</button>
+        <button class="action-button" style="background-color: darkorange; color: black;" @onclick="CancelEdit">Cancel</button>
+    </div>
+}
+
+@if (tvShows == null)
+{
+    <p style="color: darkorange;"><em>Empty... Suspicious... Server is likely not running. Double-check to make sure it is</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="color: darkorange;">Options</th>
+                <th style="color: darkorange;">ID</th>
+                <th style="color: darkorange;">Name</th>
+                <th style="color: darkorange;">Release Date</th>
+                <th style="color: darkorange;">Number of Episodes Watched</th>
+                <th style="color: darkorange;">Watch Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tvShow in tvShows)
+            {
+                <tr>
+                    <td>
+                        <!-- Edit button -->
+                        <button class="action-button" style="background-color: darkorange; color: black;" @onclick="() => ShowEditForm(tvShow)">Edit</button>
+
+                        <!-- Delete button -->
+                        <button class="action-button" style="background-color: darkorange; color: black;" @onclick="() => DeleteTVShow(tvShow.id)">Delete</button>
+                    </td>
+                    <td style="color: darkorange;">@tvShow.id</td>
+                    <td style="color: darkorange;">@tvShow.name</td>
+                    <td style="color: darkorange;">@tvShow.release_date</td>
+                    <td style="color: darkorange;">@tvShow.number_of_episodes</td>
+                    <td style="color: darkorange;">@tvShow.watch_status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <style>
+        .input-container {
+            margin-bottom: 10px;
+        }
+
+            .input-container input,
+            .input-container select {
+                background-color: #333;
+                color: white;
+                border: 1px solid darkorange;
+                padding: 6px;
+                border-radius: 4px;
+            }
+
+        .action-button {
+            border: none;
+            padding: 8px 12px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        .edit-form {
+            border: 2px solid darkorange;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+            .table th,
+            .table td {
+                border: 1px solid darkorange;
+                padding: 8px;
+                text-align: left;
+            }
+    </style>
+}
+
+
+
+@code {
+    private List<TVShow> tvShows;
+    private bool showEditForm = false;
+    private TVShow selectedTVShow;
+
+    protected override async Task OnInitializedAsync()
+    {
+        HttpClient.BaseAddress = new Uri("http://127.0.0.1:8000");
+        tvShows = await HttpClient.GetFromJsonAsync<List<TVShow>>("/tvshows");
+    }
+
+    private TVShowInputObject tvShow = new TVShowInputObject();
+
+    private async Task AddTVShow()
+    {
+        try
+        {
+            Console.WriteLine("Add TV Show button clicked");
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://127.0.0.1:8000");
+
+                await client.PostAsJsonAsync("/tvshows/", new
+                {
+                    name = tvShow.name,
+                    release_date = tvShow.release_date,
+                    number_of_episodes = tvShow.number_of_episodes,
+                    watch_status = tvShow.watch_status
+                });
+
+                tvShows = await client.GetFromJsonAsync<List<TVShow>>("/tvshows");
+            }
+
+            Console.WriteLine("Added TV show successfully");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error adding TV show: {ex.Message}");
+        }
+    }
+
+    private void ShowEditForm(TVShow tvShow)
+    {
+        selectedTVShow = tvShow;
+        showEditForm = true;
+    }
+
+    private void CancelEdit()
+    {
+        showEditForm = false;
+        selectedTVShow = null;
+    }
+
+    private async Task UpdateTVShow()
+    {
+        try
+        {
+            Console.WriteLine("Update TV Show button clicked");
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://127.0.0.1:8000");
+
+                await client.PutAsJsonAsync($"/tvshows/{selectedTVShow.id}", new
+                {
+                    name = selectedTVShow.name,
+                    release_date = selectedTVShow.release_date,
+                    number_of_episodes = selectedTVShow.number_of_episodes,
+                    watch_status = selectedTVShow.watch_status
+                });
+
+                tvShows = await client.GetFromJsonAsync<List<TVShow>>("/tvshows");
+            }
+
+            Console.WriteLine("Updated TV show successfully");
+            showEditForm = false;
+            selectedTVShow = null;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error updating TV show: {ex.Message}");
+        }
+    }
+
+    private async Task DeleteTVShow(int tvShowID)
+    {
+        try
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("http://127.0.0.1:8000");
+
+                await client.DeleteAsync($"/tvshows/{tvShowID}");
+
+                // Refresh the list of TV shows after deletion
+                tvShows = await client.GetFromJsonAsync<List<TVShow>>("/tvshows");
+            }
+
+            Console.WriteLine($"Deleted TV show with ID {tvShowID} successfully");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error deleting TV show: {ex.Message}");
+        }
+    }
+}
